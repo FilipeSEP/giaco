@@ -24,7 +24,7 @@
         }
 
         .container {
-            max-width: 500px; /* Largura máxima otimizada para celular */
+            max-width: 500px;
             width: 100%;
             background: rgba(255, 255, 255, 0.95);
             border-radius: 24px;
@@ -53,7 +53,7 @@
 
         .buttons-container {
             display: flex;
-            flex-direction: column; /* Botões em coluna no celular */
+            flex-direction: column;
             gap: 12px;
             margin-bottom: 24px;
             padding: 0 10px;
@@ -73,11 +73,11 @@
             justify-content: center;
             gap: 10px;
             width: 100%;
-            -webkit-tap-highlight-color: transparent; /* Remove fundo cinza ao clicar no celular */
+            -webkit-tap-highlight-color: transparent;
         }
 
         .btn:active {
-            transform: scale(0.97); /* Efeito de clique no celular */
+            transform: scale(0.97);
         }
 
         .btn-memories {
@@ -87,7 +87,7 @@
 
         .gallery {
             display: grid;
-            grid-template-columns: 1fr; /* Uma coluna no celular */
+            grid-template-columns: 1fr;
             gap: 16px;
             margin-top: 20px;
             padding: 0 10px;
@@ -106,9 +106,25 @@
         .card img {
             width: 100%;
             height: auto;
-            aspect-ratio: 1/1; /* Fotos quadradas */
+            aspect-ratio: 1/1;
             object-fit: cover;
             display: block;
+        }
+
+        /* CLASSE PARA AJUSTE DE FOTOS - SOLUÇÃO 1 E 4 */
+        .ajuste-rosto {
+            object-fit: cover !important;
+            object-position: 50% 30% !important; /* Foca no rosto */
+        }
+
+        .ajuste-topo {
+            object-fit: cover !important;
+            object-position: center 20% !important;
+        }
+
+        .ajuste-base {
+            object-fit: cover !important;
+            object-position: center 80% !important;
         }
 
         .card-content {
@@ -134,7 +150,7 @@
             animation: float 3s ease-in-out forwards;
             pointer-events: none;
             z-index: 1000;
-            will-change: transform, opacity; /* Melhora performance no celular */
+            will-change: transform, opacity;
         }
 
         @keyframes float {
@@ -197,7 +213,6 @@
             transform: scale(0.97);
         }
 
-        /* Ajustes para telas muito pequenas */
         @media (max-width: 380px) {
             h1 {
                 font-size: 1.8em;
@@ -213,14 +228,13 @@
             }
         }
 
-        /* Ajuste para telas grandes (tablets) */
         @media (min-width: 768px) {
             .container {
                 max-width: 700px;
             }
             
             .gallery {
-                grid-template-columns: repeat(2, 1fr); /* 2 colunas em tablets */
+                grid-template-columns: repeat(2, 1fr);
             }
         }
     </style>
@@ -237,9 +251,8 @@
             </button>
         </div>
 
-        <!-- Galeria vazia inicialmente -->
         <div id="gallery" class="gallery">
-            <!-- As fotos só aparecem quando clicar no botão -->
+            <!-- As fotos aparecem quando clicar no botão -->
         </div>
 
         <div id="message" class="message-box" style="display: none;">
@@ -252,30 +265,20 @@
     </div>
 
     <script>
-        // Banco de dados de fotos da Giaco
+        // BANCO DE DADOS DE FOTOS - CORRIGIDO!
         const photos = [
-            { url: 'https://filipesep.github.io/giaco/img/babygiaco.jpg', title: 'baby Giaco', date: '2011' },
+            { url: 'https://filipesep.github.io/giaco/img/babygiaco.jpg', title: 'Baby Giaco', date: '2011' },
             { url: 'https://filipesep.github.io/giaco/img/ani1.jpg', title: 'Aniversário de 15 anos', date: '2025' },
-            { url: 'https://filipesep.github.io/giaco/img/ani2.jpg', title: 'Aniversário de 15 anos', date: '2025' },
-            { url: 'https://filipesep.github.io/giaco/img/ani3.jpg', title: 'Aniversário de 15 anos', date: '2025' },
-            { url: 'https://filipesep.github.io/giaco/img/ani4.jpg', title: 'Aniversário de 15 anos', date: '2025' },
+            // Foto com ajuste especial (ani4.jpg)
+            { url: 'https://filipesep.github.io/giaco/img/ani4.jpg', title: 'Aniversário de 15 anos', date: '2025', ajustar: true },
             { url: 'https://filipesep.github.io/giaco/img/anipais.jpg', title: 'Aniversário de 15 anos', date: '2025' },
             { url: 'https://filipesep.github.io/giaco/img/anivovo.jpg', title: 'Aniversário de 15 anos', date: '2025' },
             { url: 'https://filipesep.github.io/giaco/img/aninana.jpg', title: 'Aniversário de 15 anos', date: '2025' },
             { url: 'https://filipesep.github.io/giaco/img/anirenan.jpg', title: 'Aniversário de 15 anos', date: '2025' },
-            { url: 'https://filipesep.github.io/giaco/img/giaco15.jpg', title: 'Aniversário de 15 anos', date: '2025' },
-            { url: 'https://filipesep.github.io/giaco/img/casa.jpg', title: 'Ano Novo', date: '2025' },
             { url: 'https://filipesep.github.io/giaco/img/todos.jpg', title: 'Ano Novo', date: '2025' },
             { url: 'https://filipesep.github.io/giaco/img/gael-serra.jpg', title: 'Serra Negra', date: '2026' },
-            { url: 'https://filipesep.github.io/giaco/img/eva.jpg', title: 'Serra Negra', date: '2026' },
-            { url: 'https://filipesep.github.io/giaco/img/stit.jpg', title: 'Serra Negra', date: '2026' },
-            { url: 'https://filipesep.github.io/giaco/img/gael-serra.jpg', title: 'Momento Modelo', date: '2025' },
-            { url: 'https://filipesep.github.io/giaco/img/giaco(1).jpg', title: 'Momento Modelo', date: '2025' },
-            { url: 'https://filipesep.github.io/giaco/img/giaco(2).jpg', title: 'Momento Modelo', date: '2025' },
-            { url: 'https://filipesep.github.io/giaco/img/giaco(3).jpg', title: 'Momento Modelo', date: '2025' },
-            { url: 'https://filipesep.github.io/giaco/img/giaco(4).jpg', title: 'Momento Modelo', date: '2025' },
-            { url: 'https://filipesep.github.io/giaco/img/giaco(5).jpg', title: 'Momento Modelo', date: '2025' }
-        ];
+            { url: 'https://filipesep.github.io/giaco/img/eva.jpg', title: 'Serra Negra', date: '2026' }
+        ]; // ARRAY FECHADO CORRETAMENTE
 
         function showPhotos() {
             const gallery = document.getElementById('gallery');
@@ -287,8 +290,15 @@
             photos.forEach(photo => {
                 const card = document.createElement('div');
                 card.className = 'card';
+                
+                // Verifica se a foto precisa de ajuste especial
+                const imgClass = photo.ajustar ? 'ajuste-rosto' : '';
+                
                 card.innerHTML = `
-                    <img src="${photo.url}" alt="${photo.title}" loading="lazy" onerror="this.src='https://via.placeholder.com/400?text=Foto+não+encontrada'">
+                    <img src="${photo.url}" alt="${photo.title}" 
+                         class="${imgClass}"
+                         loading="lazy" 
+                         onerror="this.src='https://via.placeholder.com/400?text=Foto'">
                     <div class="card-content">
                         <div class="card-title">${photo.title}</div>
                         <div class="card-date">${photo.date}</div>
@@ -341,13 +351,13 @@
         // Chuva de corações INFINITA
         function startHeartRain() {
             setInterval(() => {
-                createHearts(2); // 2 corações por vez (mais suave no celular)
+                createHearts(2);
             }, 250);
         }
 
-        // Quando a página carregar: só começa a chover coração
+        // Quando a página carregar: começa a chover coração
         window.onload = function () {
-            startHeartRain(); // Apenas corações, sem fotos
+            startHeartRain();
         };
     </script>
 </body>
